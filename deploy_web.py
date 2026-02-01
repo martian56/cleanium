@@ -14,7 +14,7 @@ def main():
     print("🚀 Cleanium Web - Deployment Script")
     print("=" * 50)
     
-    project_dir = Path(__file__).parent.absolute() + "/web/"
+    project_dir = Path(__file__).parent.absolute() / "web"
     print(f"Project directory: {project_dir}\n")
     
     client = UfazienAPIClient()
