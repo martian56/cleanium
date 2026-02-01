@@ -1,6 +1,6 @@
 # Cleanium
 
-A desktop app that finds developer junk on your disk: node_modules, venvs, Cargo build dirs, Docker unused stuff—and lets you clear it out. Windows only.
+A desktop app that finds developer junk on your disk: node_modules, venvs, Cargo build dirs, Docker unused stuff - and lets you clear it out. Windows only.
 
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D6?logo=windows)](https://www.microsoft.com/windows)
 [![Electron](https://img.shields.io/badge/Electron-40-47848F?logo=electron)](https://www.electronjs.org/)

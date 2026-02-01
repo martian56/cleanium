@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cleanium - Developer disk cleaner for Windows</title>
+  <meta name="description" content="Find and clear developer junk on your disk: node_modules, venvs, Cargo builds, Docker unused stuff. Windows only." />
+  <link rel="icon" type="image/png" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <span class="logo">◆ Cleanium</span>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="https://github.com/martian56/cleanium/releases" class="btn btn-primary">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Developer disk cleaner</h1>
+      <p class="hero-lead">Cleanium finds the stuff that eats your disk: node_modules, venvs, Cargo build dirs, Docker unused images and volumes - and lets you clear it out. Windows only.</p>
+      <a href="https://github.com/martian56/cleanium/releases" class="btn btn-primary btn-lg">Download for Windows</a>
+      <p class="hero-meta">Free · Open source · <a href="https://github.com/martian56/cleanium">GitHub</a></p>
+    </section>
+
+    <section id="screenshots" class="screenshots">
+      <h2>See it in action</h2>
+      <div class="screenshot-grid">
+        <figure class="screenshot-card">
+          <a href="assets/screenshot_1.png" target="_blank" rel="noopener">
+            <img src="assets/screenshot_1.png" alt="Cleanium scan screen - results list with categories, sizes, and delete options" width="960" height="540" />
+          </a>
+          <figcaption>Scan - Find dev artifacts, filter by category, delete to Recycle Bin or remove Docker resources.</figcaption>
+        </figure>
+        <figure class="screenshot-card">
+          <a href="assets/screenshot_2.png" target="_blank" rel="noopener">
+            <img src="assets/screenshot_2.png" alt="Cleanium history screen - past scans and findings" width="960" height="540" />
+          </a>
+          <figcaption>History - Past scans stored locally; open any run to see what was found.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <h2>What it does</h2>
+      <ul class="feature-list">
+        <li><strong>Scan</strong> - Node, Python, Rust/Cargo, Go, Docker, Next/Nuxt, build dirs, package caches.</li>
+        <li><strong>Filter</strong> - Limit the list by category (e.g. only Docker or only Node).</li>
+        <li><strong>Delete</strong> - File-system items go to Recycle Bin; Docker items (dangling images, stopped containers, unused volumes, build cache) removed via Docker API.</li>
+        <li><strong>History</strong> - SQLite stores past scans; reopen any run to review findings.</li>
+        <li><strong>Export</strong> - Save the current result set as JSON.</li>
+      </ul>
+    </section>
+
+    <section class="warning">
+      <h2>Use with care</h2>
+      <p>Deleting is real. File-system deletes go to the Recycle Bin so you can restore until you empty it. Docker removals are permanent. The app skips system and IDE dirs, but always check the path before hitting Delete.</p>
+    </section>
+
+    <section class="cta">
+      <a href="https://github.com/martian56/cleanium/releases" class="btn btn-primary btn-lg">Get the latest release</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><a href="https://github.com/martian56/cleanium">Cleanium</a> - Windows only · <a href="https://github.com/martian56/cleanium/blob/main/README.md">README</a> · <a href="https://github.com/martian56/cleanium/releases">Releases</a></p>
+  </footer>
+</body>
+</html>
