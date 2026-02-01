@@ -32,6 +32,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 a {
@@ -112,6 +113,7 @@ code {
   border: none;
   text-decoration: none;
   transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .btn-primary {
@@ -292,22 +294,141 @@ section h2 {
   color: var(--accent);
 }
 
-/* Responsive */
+/* Responsive - mobile (desktop design unchanged above 640px) */
 @media (max-width: 640px) {
   .header-inner {
     flex-direction: column;
     align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .logo {
+    font-size: 1.125rem;
+    text-align: center;
   }
 
   .nav {
     justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .nav a {
+    padding: 10px 14px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 40px 16px 32px;
   }
 
   .hero h1 {
     font-size: 1.75rem;
+    line-height: 1.25;
   }
 
   .hero-lead {
     font-size: 1rem;
+    margin-bottom: 24px;
+    padding: 0 4px;
+    overflow-wrap: break-word;
+  }
+
+  .hero .btn-lg {
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-meta {
+    font-size: 13px;
+  }
+
+  section {
+    padding: 32px 16px;
+  }
+
+  section h2 {
+    font-size: 1.35rem;
+  }
+
+  .screenshots {
+    padding-top: 16px;
+  }
+
+  .screenshot-grid {
+    gap: 28px;
+    margin-top: 24px;
+  }
+
+  .screenshot-card figcaption {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+
+  .feature-list li {
+    margin-bottom: 14px;
+    padding-right: 0;
+    overflow-wrap: break-word;
+  }
+
+  .warning {
+    padding: 24px 16px;
+  }
+
+  .warning p {
+    font-size: 14px;
+  }
+
+  .cta {
+    padding: 32px 16px 48px;
+  }
+
+  .cta .btn-lg {
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer {
+    padding: 24px 16px;
+  }
+
+  .footer p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+}
+
+/* Very small screens - extra tightening */
+@media (max-width: 380px) {
+  .header-inner {
+    padding: 12px;
+  }
+
+  .nav a {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .hero .btn-lg,
+  .cta .btn-lg {
+    max-width: 100%;
   }
 }
