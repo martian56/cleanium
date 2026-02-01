@@ -9,7 +9,7 @@
   "os": ["win32"],
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder",
+    "build": "electron-builder --publish never",
     "postinstall": "electron-builder install-app-deps",
     "rebuild": "npx @electron/rebuild -f -w better-sqlite3",
     "test": "test"
