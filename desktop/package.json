@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Disk cleaner for developers (Windows)",
   "main": "main.js",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "os": ["win32"],
   "scripts": {
     "start": "electron .",

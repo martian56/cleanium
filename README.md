@@ -4,7 +4,7 @@ A desktop app that finds developer junk on your disk—`node_modules`, venvs, Ca
 
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D6?logo=windows)](https://www.microsoft.com/windows)
 [![Electron](https://img.shields.io/badge/Electron-40-47848F?logo=electron)](https://www.electronjs.org/)
-[![Node](https://img.shields.io/badge/node-20+-339933?logo=nodedotjs)](https://nodejs.org/)
+[![Node](https://img.shields.io/badge/node-22+-339933?logo=nodedotjs)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/license-ISC-blue.svg)](LICENSE)
 
 ---
@@ -49,7 +49,7 @@ Grab the latest installer from [Releases](https://github.com/martian56/cleanium/
 
 ## Build from source
 
-You need Node.js 20+ and npm.
+You need Node.js 22+ and npm.
 
 ```bash
 git clone https://github.com/martian56/cleanium.git
