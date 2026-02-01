@@ -1,0 +1,56 @@
+{
+  "name": "cleanium",
+  "version": "1.0.0",
+  "description": "Disk cleaner for developers (Windows)",
+  "main": "main.js",
+  "os": ["win32"],
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "postinstall": "electron-builder install-app-deps",
+    "rebuild": "npx @electron/rebuild -f -w better-sqlite3",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martian56/cleanium.git"
+  },
+  "keywords": [
+    "disk-cleaner",
+    "developer-disk-cleaner",
+    "disk",
+    "cleaner"
+  ],
+  "build": {
+    "directories": {
+      "buildResources": "public",
+      "output": "dist"
+    },
+    "appId": "com.ufazien.cleanium",
+    "productName": "Cleanium",
+    "files": [
+      "**/*"
+    ],
+    "win": {
+      "icon": "public/icon.png",
+      "target": [
+        "nsis"
+      ]
+    }
+  },
+  "author": "martian56",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martian56/cleanium/issues"
+  },
+  "homepage": "https://github.com/martian56/cleanium#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "dockerode": "^4.0.9"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.3",
+    "electron": "^40.1.0",
+    "electron-builder": "^26.7.0"
+  }
+}

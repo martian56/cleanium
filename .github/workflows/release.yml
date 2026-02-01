@@ -1,0 +1,103 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '*-beta*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: desktop
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set version from tag
+        id: version
+        run: |
+          $tag = "$env:GITHUB_REF" -replace 'refs/tags/', ''
+          echo "tag=$tag" >> $env:GITHUB_OUTPUT
+          $ver = $tag -replace '^v', ''
+          echo "version=$ver" >> $env:GITHUB_OUTPUT
+          $isPrerelease = if ($tag -match 'beta') { 'true' } else { 'false' }
+          echo "prerelease=$isPrerelease" >> $env:GITHUB_OUTPUT
+
+      - name: Bump package version
+        run: npm version ${{ steps.version.outputs.version }} --no-git-tag-version --allow-same-version
+
+      - name: Build
+        run: npm run build
+
+      - name: Find setup artifact
+        id: artifact
+        run: |
+          $exe = Get-ChildItem -Path dist -Filter '*.exe' -Recurse | Select-Object -First 1
+          if (-not $exe) { throw 'No .exe found in dist' }
+          $name = $exe.Name
+          $path = $exe.FullName
+          echo "name=$name" >> $env:GITHUB_OUTPUT
+          echo "path=$path" >> $env:GITHUB_OUTPUT
+
+      - name: Generate SHA256 checksum
+        id: checksum
+        run: |
+          $exePath = '${{ steps.artifact.outputs.path }}'
+          $hash = (Get-FileHash -Path $exePath -Algorithm SHA256).Hash
+          $name = '${{ steps.artifact.outputs.name }}'
+          $content = "${hash}  ${name}"
+          $outPath = Join-Path dist "$name.sha256"
+          Set-Content -Path $outPath -Value $content -NoNewline
+          echo "path=$outPath" >> $env:GITHUB_OUTPUT
+          echo "hash=$hash" >> $env:GITHUB_OUTPUT
+
+      - name: Generate release notes
+        id: notes
+        run: |
+          $tag = '${{ steps.version.outputs.tag }}'
+          $tagRef = $tag + '^'
+          $prevTag = git describe --tags --abbrev=0 $tagRef 2>$null
+          if (-not $prevTag) { $prevTag = (git rev-list --max-parents=0 HEAD 2>$null) }
+          if (-not $prevTag) { $prevTag = 'HEAD' }
+          $commitCount = (git rev-list $prevTag..HEAD --count 2>$null)
+          if (-not $commitCount) { $commitCount = (git rev-list --count HEAD 2>$null) }
+          $contributors = (git log $prevTag..HEAD --format='%aN' 2>$null | ForEach-Object { $_.Trim() } | Where-Object { $_ } | Sort-Object -Unique)
+          $contributorList = ($contributors -join ', ')
+          $compareUrl = "https://github.com/${{ github.repository }}/compare/$prevTag...$tag"
+          $commits = (git log $prevTag..HEAD --pretty=format:'- %s (%h)' 2>$null) | Select-Object -First 80
+          $commitsText = ($commits -join "`n")
+          if (-not $commitsText) { $commitsText = '- Initial release' }
+          $body = "## Cleanium $tag`n`n**Full Changelog**: $compareUrl`n`n### Release stats`n- **Commits in this release**: $commitCount`n- **Contributors**: $contributorList`n`n### Changes`n$commitsText"
+          $body | Out-File -FilePath release-notes.md -Encoding utf8 -NoNewline
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Cleanium ${{ steps.version.outputs.tag }}
+          body_path: desktop/release-notes.md
+          prerelease: ${{ steps.version.outputs.prerelease }}
+          files: |
+            desktop/dist/${{ steps.artifact.outputs.name }}
+            desktop/dist/${{ steps.artifact.outputs.name }}.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:;" />
+  <title>Cleanium - Developer trash cleaner</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <span class="logo-icon">◆</span>
+        <span class="sidebar-title">Cleanium</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button type="button" class="nav-item active" data-view="scan" aria-current="page">
+          <span class="nav-icon">◉</span>
+          <span>Scan</span>
+        </button>
+        <button type="button" class="nav-item" data-view="history">
+          <span class="nav-icon">▣</span>
+          <span>History</span>
+        </button>
+      </nav>
+      <div class="sidebar-history" id="sidebarHistory" hidden>
+        <div class="sidebar-section-title">Past scans</div>
+        <ul class="scan-list" id="scanList"></ul>
+      </div>
+    </aside>
+
+    <div class="content">
+      <header class="header">
+        <h1 class="page-title" id="pageTitle">Scan</h1>
+        <p class="tagline" id="pageTagline">Find and free space from dev artifacts</p>
+      </header>
+
+      <main class="main">
+        <!-- Scan view -->
+        <div class="view" id="viewScan">
+          <section class="scan-section">
+            <div class="scan-controls">
+              <button type="button" class="btn btn-primary" id="scanBtn">Scan</button>
+              <button type="button" class="btn btn-secondary" id="stopScanBtn" hidden>Stop</button>
+              <label class="checkbox">
+                <input type="checkbox" id="includeHidden" checked />
+                <span>Include hidden folders</span>
+              </label>
+            </div>
+            <div class="scan-status" id="scanStatus" aria-live="polite"></div>
+            <div class="progress-bar" id="progressBar" role="progressbar" aria-hidden="true">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </section>
+
+          <section class="results-section" id="resultsSection" hidden>
+            <div class="results-toolbar">
+              <span class="results-summary" id="resultsSummary"></span>
+              <div class="results-actions">
+                <label for="filterCategory" class="filter-label">Filter:</label>
+                <select id="filterCategory" class="filter-select" aria-label="Filter by category">
+                  <option value="All">All</option>
+                </select>
+                <button type="button" class="btn btn-secondary btn-sm" id="exportBtn" disabled>Export JSON</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="selectAllBtn">Select all</button>
+                <button type="button" class="btn btn-danger btn-sm" id="deleteSelectedBtn" disabled>Delete selected</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="results-table" id="resultsTable">
+                <thead>
+                  <tr>
+                    <th class="col-check"><input type="checkbox" id="selectAllCheck" aria-label="Select all" /></th>
+                    <th class="col-category">Category</th>
+                    <th class="col-path">Path</th>
+                    <th class="col-size">Size</th>
+                    <th class="col-action">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="resultsBody"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="empty-state" id="emptyState">
+            <div class="empty-icon">◆</div>
+            <p>Click <strong>Scan</strong> to find Node, Python, Cargo, Docker, and other dev artifacts. Findings appear in real time.</p>
+          </section>
+        </div>
+
+        <!-- History view -->
+        <div class="view hidden" id="viewHistory">
+          <section class="history-section">
+            <p class="history-hint" id="historyHint">Select a scan from the sidebar to view its findings.</p>
+            <div class="history-results" id="historyResults" hidden>
+              <div class="results-toolbar">
+                <span class="results-summary" id="historySummary"></span>
+                <div class="results-actions">
+                  <button type="button" class="btn btn-danger btn-sm" id="deleteScanBtn" title="Remove this scan from history">Delete scan</button>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table class="results-table">
+                  <thead>
+                    <tr>
+                      <th class="col-category">Category</th>
+                      <th class="col-path">Path</th>
+                      <th class="col-size">Size</th>
+                    </tr>
+                  </thead>
+                  <tbody id="historyBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <span>Cleanium</span>
+        <span class="muted">Developer trash cleaner</span>
+      </footer>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
